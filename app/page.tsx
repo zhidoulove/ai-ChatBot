@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import MessageDisplay from './component/MessageDisplay'
 import Sidebar from './component/Sidebar'
 import { useTheme } from 'next-themes'
@@ -158,7 +158,7 @@ export default function Home() {
 
   //获取当前对话的消息
   const currentChat = chats.find(chat => chat.id === currentChatId)
-  const messages = currentChat?.messages || []
+  const messages = useMemo(() => currentChat?.messages || [], [currentChat])
 
   const handleNewChat = () => {
     const newChat: Chat = {
@@ -373,7 +373,6 @@ export default function Home() {
         content: ''
 
       }
-      let finalMessage = [...newMessages, assistantMessage]
       while (true) {
         const { done, value } = await reader!.read()
         if (done) break
