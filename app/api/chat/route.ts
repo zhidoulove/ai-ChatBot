@@ -87,11 +87,11 @@ export async function POST(req: Request) {
       }
     })
 
-} catch (error: any) {
+} catch (error: unknown) {
   console.error('Deepseek API 错误:', error)
   //详细错误信息
-  const errorMessage = error?.message || '未知错误'
-  const errorStatus = error?.status || 500
+  const errorMessage = error instanceof Error ? error.message : '未知错误'
+  const errorStatus = (error as { status?: number })?.status || 500
 
   return new Response(
     JSON.stringify({ 

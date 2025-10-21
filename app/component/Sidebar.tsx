@@ -12,11 +12,18 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
+type Message = {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+}
+
 type Chat = {
   id: string
   name: string
-  messages: any[]
+  messages: Message[]
   createdAt: number
+  isPinned?: boolean
 }
 
 type SidebarProps = {

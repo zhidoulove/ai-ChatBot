@@ -10,6 +10,12 @@ type MessageDisplayProps = {
     content: string
 }
 
+type CodeProps = {
+  inline?: boolean
+  className?: string
+  children?: React.ReactNode
+}
+
 export default function MessageDisplay({ content }: MessageDisplayProps) {
   //添加复制状态
   const [copied, setCopied] = useState(false)
@@ -40,7 +46,7 @@ export default function MessageDisplay({ content }: MessageDisplayProps) {
             remarkPlugins={[remarkGfm]}
             components={{
               // 自定义代码块渲染方式
-                code({node, inline, className, children, ...props} : any){
+                code({inline, className, children, ...props}: CodeProps){
                   const match = /language-(\w+)/.exec(className || '')
                   return !inline && match ? (
                     <SyntaxHighlighter
